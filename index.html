@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Vertical Bars Loading</title>
+<style>
+  :root {
+    --bg: #0b0b0f;
+    --bar: #ffffff;
+    --bar-width: 12px;
+    --bar-gap: 14px;
+    --bar-height: 64px;
+    --bars: 4;                 /* number of bars */
+    --duration: 1200ms;        /* full cycle duration */
+    --glow: 0 0 12px rgba(255,255,255,0.35);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    font-family: system-ui, sans-serif;
+  }
+
+  .loader {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: end;
+    gap: var(--bar-gap);
+    filter: contrast(115%);
+  }
+
+  .bar {
+    width: var(--bar-width);
+    height: var(--bar-height);
+    background: var(--bar);
+    border-radius: 6px;
+    box-shadow: var(--glow);
+    transform-origin: 50% 100%;
+    /* Discrete, frame-like pulsing */
+    animation: pulse var(--duration) steps(30) infinite;
+  }
+
+  /* Stagger each bar to create the sequential rhythm */
+  .bar:nth-child(1) { animation-delay: 0ms; }
+  .bar:nth-child(2) { animation-delay: calc(var(--duration) / 8); }
+  .bar:nth-child(3) { animation-delay: calc(var(--duration) / 4); }
+  .bar:nth-child(4) { animation-delay: calc(var(--duration) * 3 / 8); }
+
+  /* Frame-style pulse: scale + fade to simulate discrete frames */
+  @keyframes pulse {
+    /* “Off” frame */
+    0%   { transform: scaleY(0.35); opacity: 0.35; filter: brightness(0.9); }
+    /* “Rise” frames */
+    25%  { transform: scaleY(0.7);  opacity: 0.6;  filter: brightness(1.0); }
+    50%  { transform: scaleY(1.0); opacity: 1;    filter: brightness(1.15); }
+    /* “Fall” frames */
+    75%  { transform: scaleY(0.7);  opacity: 0.6;  filter: brightness(1.0); }
+    100% { transform: scaleY(0.35); opacity: 0.35; filter: brightness(0.9); }
+  }
+</style>
+</head>
+<body>
+  <div class="loader" aria-label="Loading" role="status">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </div>
+</body>
+</html>

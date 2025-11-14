@@ -2,72 +2,56 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Vertical Bars Loading</title>
+<title>3-Bar Loading Animation</title>
 <style>
   :root {
-    --bg: #0b0b0f;
-    --bar: #ffffff;
+    --bg: #000;
+    --bar-color: #fff;
     --bar-width: 12px;
-    --bar-gap: 14px;
+    --bar-gap: 16px;
     --bar-height: 64px;
-    --bars: 4;                 /* number of bars */
-    --duration: 1200ms;        /* full cycle duration */
-    --glow: 0 0 12px rgba(255,255,255,0.35);
+    --duration: 900ms; /* Adjust to match your frame pacing */
   }
 
   body {
     margin: 0;
-    min-height: 100vh;
+    background: var(--bg);
     display: grid;
     place-items: center;
-    background: var(--bg);
-    font-family: system-ui, sans-serif;
+    height: 100vh;
   }
 
   .loader {
-    display: grid;
-    grid-auto-flow: column;
-    align-items: end;
+    display: flex;
     gap: var(--bar-gap);
-    filter: contrast(115%);
   }
 
   .bar {
     width: var(--bar-width);
     height: var(--bar-height);
-    background: var(--bar);
-    border-radius: 6px;
-    box-shadow: var(--glow);
-    transform-origin: 50% 100%;
-    /* Discrete, frame-like pulsing */
+    background-color: var(--bar-color);
     animation: pulse var(--duration) steps(30) infinite;
+    transform-origin: bottom;
   }
 
-  /* Stagger each bar to create the sequential rhythm */
   .bar:nth-child(1) { animation-delay: 0ms; }
-  .bar:nth-child(2) { animation-delay: calc(var(--duration) / 8); }
-  .bar:nth-child(3) { animation-delay: calc(var(--duration) / 4); }
-  .bar:nth-child(4) { animation-delay: calc(var(--duration) * 3 / 8); }
+  .bar:nth-child(2) { animation-delay: 150ms; }
+  .bar:nth-child(3) { animation-delay: 300ms; }
 
-  /* Frame-style pulse: scale + fade to simulate discrete frames */
   @keyframes pulse {
-    /* “Off” frame */
-    0%   { transform: scaleY(0.35); opacity: 0.35; filter: brightness(0.9); }
-    /* “Rise” frames */
-    25%  { transform: scaleY(0.7);  opacity: 0.6;  filter: brightness(1.0); }
-    50%  { transform: scaleY(1.0); opacity: 1;    filter: brightness(1.15); }
-    /* “Fall” frames */
-    75%  { transform: scaleY(0.7);  opacity: 0.6;  filter: brightness(1.0); }
-    100% { transform: scaleY(0.35); opacity: 0.35; filter: brightness(0.9); }
+    0%   { transform: scaleY(0.3); }
+    25%  { transform: scaleY(0.6); }
+    50%  { transform: scaleY(1.0); }
+    75%  { transform: scaleY(0.6); }
+    100% { transform: scaleY(0.3); }
   }
 </style>
 </head>
 <body>
-  <div class="loader" aria-label="Loading" role="status">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
+  <div class="loader">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
   </div>
 </body>
 </html>

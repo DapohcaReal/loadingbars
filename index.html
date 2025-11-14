@@ -2,70 +2,187 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>3-Frame Intro + Loop</title>
+<title>36-Frame 3-Bar Loader</title>
 <style>
   :root {
     --bg: #000;
-    --bar-color: #fff;
-    --bar-width: 14px;
-    --bar-gap: 18px;
-    --duration: 1200ms; /* total cycle time */
+    --bar: #fff;
+    --bar-width: 16px;   /* adjust to match your bar width */
+    --bar-gap: 18px;     /* spacing between bars */
+    --max-h: 64px;       /* tallest bar height in px (match your source) */
+    --duration: 1080ms;  /* 36 frames × 30ms (Delay=3) -> tune as needed */
   }
 
-  body {
+  /* Stage */
+  html, body {
+    height: 100%;
     margin: 0;
     background: var(--bg);
-    height: 100vh;
+  }
+  .stage {
+    height: 100%;
     display: grid;
     place-items: center;
   }
 
+  /* Loader container */
   .loader {
     display: flex;
-    align-items: end;
+    align-items: end; /* bars grow from bottom */
     gap: var(--bar-gap);
   }
 
+  /* Bars: sharp corners, pure white, no glow */
   .bar {
     width: var(--bar-width);
-    background: var(--bar-color);
+    background: var(--bar);
     transform-origin: bottom;
+    /* No opacity/brightness changes — height only */
   }
 
-  /* Each bar gets its own animation with 4 hard steps */
-  .bar1 { animation: frames1 var(--duration) steps(4) infinite; }
-  .bar2 { animation: frames2 var(--duration) steps(4) infinite; }
-  .bar3 { animation: frames3 var(--duration) steps(4) infinite; }
+  /* Each bar has its own 36-frame track (hard steps, no interpolation) */
+  .bar--a { animation: aTrack var(--duration) steps(36) infinite; }
+  .bar--b { animation: bTrack var(--duration) steps(36) infinite; }
+  .bar--c { animation: cTrack var(--duration) steps(36) infinite; }
 
-  /* Replace these heights with your exact pixel values */
+  /*
+    IMPORTANT: Replace the height values below with your exact per-frame pixel heights.
+    Use 36 stops: 0%, 2.777%, 5.555%, ... up to 100%.
+    Each stop corresponds to frame n (n = 1..36). Step size = 100/36 ≈ 2.777...%.
+    Tip: If your delays vary (1–4), keep visual frames uniform and control pacing via --duration.
+  */
 
-  @keyframes frames1 {
-    0%      { height: 52px; }   /* Frame 1 */
-    25%     { height: 64px; }   /* Frame 2 */
-    50%     { height: 36px; }   /* Frame 3 */
-    75%,100%{ height: 48px; }   /* Frame 4 (loop) */
+  /* Bar A: frame-by-frame heights */
+  @keyframes aTrack {
+    0%      { height: 60px; }   /* frame 1 */
+    2.777%  { height: 64px; }   /* frame 2 */
+    5.555%  { height: 56px; }   /* frame 3 */
+    8.333%  { height: 52px; }   /* frame 4 */
+    11.111% { height: 48px; }   /* frame 5 */
+    13.888% { height: 44px; }   /* frame 6 */
+    16.666% { height: 40px; }   /* frame 7 */
+    19.444% { height: 36px; }   /* frame 8 */
+    22.222% { height: 40px; }   /* frame 9 */
+    25%     { height: 44px; }   /* frame 10 */
+    27.777% { height: 48px; }   /* frame 11 */
+    30.555% { height: 52px; }   /* frame 12 */
+    33.333% { height: 56px; }   /* frame 13 */
+    36.111% { height: 60px; }   /* frame 14 */
+    38.888% { height: 64px; }   /* frame 15 */
+    41.666% { height: 60px; }   /* frame 16 */
+    44.444% { height: 56px; }   /* frame 17 */
+    47.222% { height: 52px; }   /* frame 18 */
+    50%     { height: 48px; }   /* frame 19 */
+    52.777% { height: 44px; }   /* frame 20 */
+    55.555% { height: 40px; }   /* frame 21 */
+    58.333% { height: 36px; }   /* frame 22 */
+    61.111% { height: 40px; }   /* frame 23 */
+    63.888% { height: 44px; }   /* frame 24 */
+    66.666% { height: 48px; }   /* frame 25 */
+    69.444% { height: 52px; }   /* frame 26 */
+    72.222% { height: 56px; }   /* frame 27 */
+    75%     { height: 60px; }   /* frame 28 */
+    77.777% { height: 64px; }   /* frame 29 */
+    80.555% { height: 60px; }   /* frame 30 */
+    83.333% { height: 56px; }   /* frame 31 */
+    86.111% { height: 52px; }   /* frame 32 */
+    88.888% { height: 48px; }   /* frame 33 */
+    91.666% { height: 44px; }   /* frame 34 */
+    94.444% { height: 40px; }   /* frame 35 */
+    97.222% { height: 36px; }   /* frame 36 */
+    100%    { height: 36px; }   /* loop safety */
   }
 
-  @keyframes frames2 {
-    0%      { height: 64px; }
-    25%     { height: 28px; }
-    50%     { height: 48px; }
-    75%,100%{ height: 48px; }
+  /* Bar B: frame-by-frame heights */
+  @keyframes bTrack {
+    0%      { height: 48px; }   /* 1 */
+    2.777%  { height: 52px; }   /* 2 */
+    5.555%  { height: 56px; }   /* 3 */
+    8.333%  { height: 60px; }   /* 4 */
+    11.111% { height: 64px; }   /* 5 */
+    13.888% { height: 60px; }   /* 6 */
+    16.666% { height: 56px; }   /* 7 */
+    19.444% { height: 52px; }   /* 8 */
+    22.222% { height: 48px; }   /* 9 */
+    25%     { height: 44px; }   /* 10 */
+    27.777% { height: 40px; }   /* 11 */
+    30.555% { height: 36px; }   /* 12 */
+    33.333% { height: 40px; }   /* 13 */
+    36.111% { height: 44px; }   /* 14 */
+    38.888% { height: 48px; }   /* 15 */
+    41.666% { height: 52px; }   /* 16 */
+    44.444% { height: 56px; }   /* 17 */
+    47.222% { height: 60px; }   /* 18 */
+    50%     { height: 64px; }   /* 19 */
+    52.777% { height: 60px; }   /* 20 */
+    55.555% { height: 56px; }   /* 21 */
+    58.333% { height: 52px; }   /* 22 */
+    61.111% { height: 48px; }   /* 23 */
+    63.888% { height: 44px; }   /* 24 */
+    66.666% { height: 40px; }   /* 25 */
+    69.444% { height: 36px; }   /* 26 */
+    72.222% { height: 40px; }   /* 27 */
+    75%     { height: 44px; }   /* 28 */
+    77.777% { height: 48px; }   /* 29 */
+    80.555% { height: 52px; }   /* 30 */
+    83.333% { height: 56px; }   /* 31 */
+    86.111% { height: 60px; }   /* 32 */
+    88.888% { height: 64px; }   /* 33 */
+    91.666% { height: 60px; }   /* 34 */
+    94.444% { height: 56px; }   /* 35 */
+    97.222% { height: 52px; }   /* 36 */
+    100%    { height: 52px; }
   }
 
-  @keyframes frames3 {
-    0%      { height: 40px; }
-    25%     { height: 56px; }
-    50%     { height: 64px; }
-    75%,100%{ height: 48px; }
+  /* Bar C: frame-by-frame heights */
+  @keyframes cTrack {
+    0%      { height: 36px; }   /* 1 */
+    2.777%  { height: 40px; }   /* 2 */
+    5.555%  { height: 44px; }   /* 3 */
+    8.333%  { height: 48px; }   /* 4 */
+    11.111% { height: 52px; }   /* 5 */
+    13.888% { height: 56px; }   /* 6 */
+    16.666% { height: 60px; }   /* 7 */
+    19.444% { height: 64px; }   /* 8 */
+    22.222% { height: 60px; }   /* 9 */
+    25%     { height: 56px; }   /* 10 */
+    27.777% { height: 52px; }   /* 11 */
+    30.555% { height: 48px; }   /* 12 */
+    33.333% { height: 44px; }   /* 13 */
+    36.111% { height: 40px; }   /* 14 */
+    38.888% { height: 36px; }   /* 15 */
+    41.666% { height: 40px; }   /* 16 */
+    44.444% { height: 44px; }   /* 17 */
+    47.222% { height: 48px; }   /* 18 */
+    50%     { height: 52px; }   /* 19 */
+    52.777% { height: 56px; }   /* 20 */
+    55.555% { height: 60px; }   /* 21 */
+    58.333% { height: 64px; }   /* 22 */
+    61.111% { height: 60px; }   /* 23 */
+    63.888% { height: 56px; }   /* 24 */
+    66.666% { height: 52px; }   /* 25 */
+    69.444% { height: 48px; }   /* 26 */
+    72.222% { height: 44px; }   /* 27 */
+    75%     { height: 40px; }   /* 28 */
+    77.777% { height: 36px; }   /* 29 */
+    80.555% { height: 40px; }   /* 30 */
+    83.333% { height: 44px; }   /* 31 */
+    86.111% { height: 48px; }   /* 32 */
+    88.888% { height: 52px; }   /* 33 */
+    91.666% { height: 56px; }   /* 34 */
+    94.444% { height: 60px; }   /* 35 */
+    97.222% { height: 64px; }   /* 36 */
+    100%    { height: 64px; }
   }
 </style>
 </head>
 <body>
-  <div class="loader" aria-label="Loading" role="status">
-    <div class="bar bar1"></div>
-    <div class="bar bar2"></div>
-    <div class="bar bar3"></div>
+  <div class="stage">
+    <div class="loader" aria-label="Loading" role="status">
+      <div class="bar bar--a"></div>
+      <div class="bar bar--b"></div>
+      <div class="bar bar--c"></div>
+    </div>
   </div>
 </body>
 </html>
